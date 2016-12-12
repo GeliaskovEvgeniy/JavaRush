@@ -11,9 +11,9 @@ import java.nio.file.Paths;
 public class Solution {
     public static void main(String[] args) throws IOException, InterruptedException {
         Solution solution = new Solution();
-        String fileNameToBeOpenedByNotepad = solution.getAbsolutePathtoDefaultTxtFile().toString();
-        Process process = solution.getProcessStartNotepad(fileNameToBeOpenedByNotepad);
-        process.waitFor();
+        String fileNameToBeOpenedByNotepad = solution.getAbsolutePathToDefaultTxtFile().toString();
+        Process notepad = solution.getProcessStartNotepad(fileNameToBeOpenedByNotepad);
+        notepad.waitFor();
     }
 
     public Process getProcessStartNotepad(String fileName) throws IOException {
@@ -21,7 +21,7 @@ public class Solution {
         return Runtime.getRuntime().exec(cmdArray);
     }
 
-    public Path getAbsolutePathtoDefaultTxtFile() {
+    public Path getAbsolutePathToDefaultTxtFile() {
         String packageName = Solution.class.getPackage().getName().replaceAll("[.]", "\\\\");
         String fileName = "src\\" + packageName + "\\file.txt";
         Path path = Paths.get(fileName);

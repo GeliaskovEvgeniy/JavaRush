@@ -10,13 +10,15 @@ public class Producer implements Runnable{
     }
 
     public void run() {
-        Thread currentThread = Thread.currentThread();
-        while (!currentThread.isInterrupted()) {
-            if (!map.isEmpty()) {
-                for (String key : map.keySet()) {
-                    System.out.println(map.remove(key));
-                }
+        try {
+            int i = 1;
+            while (true) {
+                System.out.println("Some text for "+i++);
+                Thread.sleep(500);
             }
+        } catch (InterruptedException e) {
+            System.out.println(String.format("[%s] thread was terminated", Thread.currentThread().getName()));
         }
     }
+
 }

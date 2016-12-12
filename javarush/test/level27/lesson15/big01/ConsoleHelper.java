@@ -8,30 +8,36 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConsoleHelper {
-    private static BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
 
-    public static void writeMessage(String message){
+public class ConsoleHelper {
+
+    private static final BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
+
+    public static void writeMessage(String message) {
         System.out.println(message);
     }
 
     public static String readString() throws IOException {
-            return bf.readLine();
+        return console.readLine();
     }
 
     public static List<Dish> getAllDishesForOrder() throws IOException {
-        List<Dish> orderedDishes = new ArrayList<>();
-        if (Dish.values().length > 0) {
-            writeMessage(Dish.allDishesToString());
-            String nextDish;
-            while (!"exit".equalsIgnoreCase(nextDish = readString())) {
-                try {
-                    orderedDishes.add(Dish.valueOf(nextDish));
-                } catch (IllegalArgumentException e) {
-                    ConsoleHelper.writeMessage(nextDish + " is not detected");
-                }
+        List<Dish> dishes = new ArrayList<>();
+        String str;
+        writeMessage("Enter dish...(" + Dish.allDishesToString() + ")");
+        while (true) {
+            str = readString();
+            if ("exit".equals(str)) {
+                break;
+            }
+
+            try {
+                dishes.add(Dish.valueOf(str));
+            }
+            catch (IllegalArgumentException e) {
+                ConsoleHelper.writeMessage(str + " is not detected");
             }
         }
-        return orderedDishes;
+        return dishes;
     }
 }

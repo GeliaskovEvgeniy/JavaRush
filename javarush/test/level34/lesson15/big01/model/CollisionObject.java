@@ -1,14 +1,18 @@
 package com.javarush.test.level34.lesson15.big01.model;
 
-public abstract class CollisionObject extends GameObject{
-    public CollisionObject(int x, int y) {
+public abstract class CollisionObject extends GameObject
+{
+    public CollisionObject(int x, int y)
+    {
         super(x, y);
     }
 
-    public boolean isCollision(GameObject gameObject, Direction direction){
+    public boolean isCollision(GameObject gameObject, Direction direction)
+    {
         boolean result = false;
 
-        switch (direction) {
+        switch (direction)
+        {
 
             case LEFT:
                 if (getX() - Model.FIELD_SELL_SIZE == gameObject.getX() && getY() == gameObject.getY())

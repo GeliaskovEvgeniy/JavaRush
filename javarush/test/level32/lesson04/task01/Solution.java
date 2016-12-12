@@ -1,10 +1,7 @@
 package com.javarush.test.level32.lesson04.task01;
 
-import org.jsoup.nodes.Element;
 
-import java.io.PrintStream;
 import java.io.PrintWriter;
-import java.io.StringReader;
 import java.io.StringWriter;
 
 /* Пишем стек-трейс

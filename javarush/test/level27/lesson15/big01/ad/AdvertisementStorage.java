@@ -3,10 +3,16 @@ package com.javarush.test.level27.lesson15.big01.ad;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by FarAway on 27.02.2016.
+ */
+//Set modificator: for test  - public, for production - package local
 class AdvertisementStorage {
-    private static AdvertisementStorage ourInstance;
-
-    private final List<Advertisement> videos = new ArrayList<>();
+    private static AdvertisementStorage ourInstance = new AdvertisementStorage();
+    private final List<Advertisement> videos = new ArrayList<Advertisement>();
+    public static AdvertisementStorage getInstance() {
+        return ourInstance;
+    }
 
     private AdvertisementStorage() {
         Object someContent = new Object();
@@ -15,20 +21,11 @@ class AdvertisementStorage {
         videos.add(new Advertisement(someContent, "Third Video", 400, 2, 10 * 60));   //10 min
     }
 
-
-    public static AdvertisementStorage getInstance() {
-        if (ourInstance == null){
-            ourInstance = new AdvertisementStorage();
-        }
-        return ourInstance;
-    }
-
-
-    public List<Advertisement> list() {
+    public List<Advertisement> list() {   //  - который вернет список всех существующих доступных видео
         return videos;
     }
 
-    public void add(Advertisement advertisement){
+    public void add(Advertisement advertisement) {   //  - который добавит новое видео в список videos
         videos.add(advertisement);
     }
 }

@@ -17,7 +17,6 @@ import java.util.List;
 */
 public class Solution {
     public static final String DEFAULT_FILE_NAME = "C:/tmp/file_strange_name.tmp";
-
     private final String localFileName;
     private List<String> contentAsLines;
     private boolean fileLoaded;
@@ -41,7 +40,7 @@ public class Solution {
         }
     }
 
-    public boolean isFileExpectedLine(String expectedLine) {
+    public boolean hasFileExpectedLine(String expectedLine) {
         return contentAsLines.contains(expectedLine);
     }
 
@@ -52,8 +51,8 @@ public class Solution {
         Solution solution = new Solution(fileName);
         solution.downloadFileContent();
         if (solution.isFileLoaded()) {
-            System.out.println(solution.isFileExpectedLine("public class Solution {"));   //expected true
-            System.out.println(solution.isFileExpectedLine(" public class Solution {"));  //expected false
+            System.out.println(solution.hasFileExpectedLine("public class Solution {"));
+            System.out.println(solution.hasFileExpectedLine(" public class Solution {"));
         }
     }
 }

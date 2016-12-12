@@ -10,60 +10,45 @@ package com.javarush.test.level22.lesson05.task01;
 Метод main не участвует в тестировании.
 */
 public class Solution {
-    public static String getPartOfString(String string) throws TooShortStringException
-    {
-        try{
-            int a = 0;
-            int i = 0;
-            for (char c : string.toCharArray()){
-                if (c == ' ') i++;
-                if (i == 5) break;
-                a++;
-            }
-            return string.substring(string.indexOf(" ")+1, a).trim();
-
-        }catch (Exception e){
-            throw new TooShortStringException();
-        }
-    }
-
-    public static class TooShortStringException extends Throwable
-    {
-    }
 
     public static void main(String[] args) throws TooShortStringException
     {
-        System.out.println(getPartOfString("JavaRush - лучший сервис       обучения Java."));
-        String s = getPartOfString("  a b c d ");
-        System.err.println(s + "|");
-        System.err.println("0123456789012345678901234567890");
-//2
-        s = getPartOfString("JavaRush - лучший сервис            обучения Java.");
-        System.err.println(s + "|");
-        System.err.println("0123456789012345678901234567890");
-//3
-        s = getPartOfString("     5");
-        System.err.println(s + "|");
-        System.err.println("0123456789012345678901234567890");
-//4
-        s = getPartOfString("  1 + 2= 3");
-        System.err.println(s + "|");
-        System.err.println("0123456789012345678901234567890");
-//5
-        s = getPartOfString("a + b = c ");
-        System.err.println(s + "|");
-        System.err.println("0123456789012345678901234567890");
-//6
-        s = getPartOfString("    ");
-        System.err.println(s + "|");
-        System.err.println("0123456789012345678901234567890");
-//7
-        s = getPartOfString("");
-        System.err.println(s + "|");
-        System.err.println("0123456789012345678901234567890");
-//8
-        s = getPartOfString(null);
-        System.err.println(s + "|");
-        System.err.println("0123456789012345678901234567890");
+        System.out.println(getPartOfString("JavaRush - лучший сервис обучения Java."));
+    }
+
+    public static String getPartOfString(String string) throws TooShortStringException
+    {
+
+        if (string == null)
+            throw new TooShortStringException();
+        int firstSpace = string.indexOf(" ");
+        if (firstSpace == -1)
+            throw new TooShortStringException();
+        int lastSpace = string.indexOf(" ", firstSpace + 1);
+        if (lastSpace == -1)
+            throw new TooShortStringException();
+        lastSpace = string.indexOf(" ", lastSpace + 1);
+        if (lastSpace == -1)
+            throw new TooShortStringException();
+        lastSpace = string.indexOf(" ", lastSpace + 1);
+        if (lastSpace == -1)
+            throw new TooShortStringException();
+        String afterLastSpace = string.substring(lastSpace + 1);
+        System.out.println(afterLastSpace);
+        char[] afterLastSpaceArray = afterLastSpace.toCharArray();
+        int index = 0;
+        if (!Character.isLetter(afterLastSpaceArray[0]))
+            throw new TooShortStringException();
+        for (int i = 1; i < afterLastSpaceArray.length; i++)
+        {
+            if (Character.isLetter(afterLastSpaceArray[i]))
+                index = i;
+            else
+                break;
+        }
+        return string.substring(firstSpace+1, lastSpace + index + 2);
+    }
+
+    public static class TooShortStringException extends Exception {
     }
 }

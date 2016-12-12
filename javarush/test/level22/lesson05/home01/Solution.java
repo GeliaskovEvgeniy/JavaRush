@@ -28,7 +28,7 @@ public class Solution {
     }
 
     protected void initThreads() {
-        this.thread1 = new Thread(new Task(this, "\tA\tB\tC\tD\tE\tF\tG\tH\tI"), FIRST_THREAD_NAME);
+        this.thread1 = new Thread(new Task(this, "A\tB\tC\tD\tE\tF\tG\tH\tI"), FIRST_THREAD_NAME);
         this.thread2 = new Thread(new Task(this, "J\tK\tL\tM\tN\tO\tP\tQ\tR\tS\tT\tU\tV\tW\tX\tY\tZ"), SECOND_THREAD_NAME);
         this.thread3 = new Thread(new Task(this, "\t\t"), "3#");
 
@@ -40,6 +40,21 @@ public class Solution {
     }
 
     public String getPartOfString(String string, String threadName) {
-        return null;
+        String result;
+        try {
+            result = string.substring(string.indexOf("\t")+1, string.lastIndexOf("\t"));
+        }
+        catch (StringIndexOutOfBoundsException e){
+            switch (threadName)
+            {
+                case FIRST_THREAD_NAME:
+                    throw new TooShortStringFirstThreadException(e);
+                case SECOND_THREAD_NAME:
+                    throw new TooShortStringSecondThreadException(e);
+                default:
+                    throw new RuntimeException(e);
+            }
+        }
+        return result;
     }
 }

@@ -1,10 +1,9 @@
 package com.javarush.test.level33.lesson15.big01.strategies;
 
-import com.google.common.collect.HashBiMap;
 
-public class HashBiMapStorageStrategy implements StorageStrategy {
+public class HashBiMapStorageStrategy  {
 
-    private HashBiMap<Long, String> data = HashBiMap.create();
+  /*  private HashBiMap<Long, String> data = HashBiMap.create();
     @Override
     public boolean containsKey(Long key) {
         return data.containsKey(key);
@@ -28,5 +27,5 @@ public class HashBiMapStorageStrategy implements StorageStrategy {
     @Override
     public String getValue(Long key) {
         return data.get(key);
-    }
+    }*/
 }

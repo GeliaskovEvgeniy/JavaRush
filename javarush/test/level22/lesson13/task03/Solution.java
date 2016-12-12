@@ -25,23 +25,8 @@ package com.javarush.test.level22.lesson13.task03;
 */
 public class Solution {
 
-    public static void main(String[] args)
-    {
-        System.out.println(checkTelNumber("+38050123456"));
-        System.out.println(checkTelNumber("+38(050)1234567"));
-        System.out.println(checkTelNumber("+38050123-45-67"));
-        System.out.println(checkTelNumber("050123-4567"));
-        System.out.println();
-        System.out.println(checkTelNumber("0501234567"));
-        System.out.println(checkTelNumber("(0)501234567"));
-        System.out.println(checkTelNumber("+38)050(1234567"));
-        System.out.println(checkTelNumber("+38(050)12345678"));
-        System.out.println(checkTelNumber("050ххх4567"));
-    }
-
     public static boolean checkTelNumber(String telNumber) {
-
-        boolean matches = telNumber.matches("^((\\+38)?(\\(?\\d{3}\\)?\\d{3}-?\\d{2}-?\\d{2})$)");
-        return matches;
+        return ((telNumber.matches("^\\+[\\(\\-]?(\\d[\\(\\)\\-]?){11}\\d$") || telNumber.matches("^\\(?(\\d[\\-\\(\\)]?){9}\\d$"))
+                && telNumber.matches("[\\+]?\\d*(\\(\\d{3}\\))?\\d*\\-?\\d*\\-?\\d*\\d$"));
     }
 }

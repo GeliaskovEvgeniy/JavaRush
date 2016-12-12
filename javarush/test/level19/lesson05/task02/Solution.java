@@ -10,21 +10,36 @@ package com.javarush.test.level19.lesson05.task02;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Scanner;
+import java.io.InputStreamReader;
 
 public class Solution {
-    public static void main(String[] args) throws IOException
-    {
-        Scanner scanner = new Scanner(System.in);
-        BufferedReader reader = new BufferedReader(new FileReader(scanner.nextLine()));
-        String s = "";
-        while (reader.ready()){
-            s += reader.readLine();
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+        FileReader inFile = new FileReader(reader.readLine());
+        int count = 0;
+        String str = "";
+
+        while (inFile.ready()){
+            char symbol = (char) inFile.read();
+            str += String.valueOf(symbol).toLowerCase();
         }
-        String s1 = s.toLowerCase();
-        String[] arr = s1.split("world");
-        System.out.println(arr.length - 1);
-        scanner.close();
+
+        str = str.replaceAll("\\p{Punct}", " ");
+        str = str.replaceAll("\n", " ");
+        //System.out.println(str);
+
+        String[] mas = str.split(" ");
+        for(String s: mas){
+            s = s.trim();
+            if (s.equals("world"))
+                count++;
+        }
+
+        System.out.println(count);
         reader.close();
+        inFile.close();
     }
+
+
 }

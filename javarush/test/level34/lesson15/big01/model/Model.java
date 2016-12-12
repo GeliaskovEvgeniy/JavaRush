@@ -4,47 +4,57 @@ import com.javarush.test.level34.lesson15.big01.controller.EventListener;
 
 import java.nio.file.Paths;
 
-public class Model {
+public class Model
+{
     public static int FIELD_SELL_SIZE = 20;
     private EventListener eventListener;
     private GameObjects gameObjects;
     private int currentLevel = 1;
     private LevelLoader levelLoader = new LevelLoader(Paths.get("..\\res\\levels.txt"));
 
-    public void setEventListener(EventListener eventListener) {
+    public void setEventListener(EventListener eventListener)
+    {
         this.eventListener = eventListener;
     }
 
-    public GameObjects getGameObjects(){
+    public GameObjects getGameObjects()
+    {
         return gameObjects;
     }
 
-    public void restartLevel(int level){
+    public void restartLevel(int level)
+    {
         this.gameObjects = levelLoader.getLevel(level);
     }
 
-    public void restart(){
+    public void restart()
+    {
         restartLevel(currentLevel);
     }
 
-    public void startNextLevel(){
+    public void startNextLevel()
+    {
         currentLevel++;
         restartLevel(currentLevel);
     }
 
-    public void move(Direction direction){
+    public void move(Direction direction)
+    {
 
         Player player = gameObjects.getPlayer();
 
-        if (checkWallCollision(player, direction)) {
+        if (checkWallCollision(player, direction))
+        {
             return;
         }
-        if (checkBoxCollision(direction)){
+        if (checkBoxCollision(direction))
+        {
             return;
         }
 
         int sellSize = FIELD_SELL_SIZE;
-        switch (direction) {
+        switch (direction)
+        {
             case LEFT:
                 player.move(-sellSize, 0);
                 break;
@@ -61,11 +71,14 @@ public class Model {
     }
 
 
-    public boolean checkWallCollision(CollisionObject gameObject, Direction direction){
+    public boolean checkWallCollision(CollisionObject gameObject, Direction direction)
+    {
 
-        for (Wall wall : gameObjects.getWalls()){
+        for (Wall wall : gameObjects.getWalls())
+        {
 
-            if(gameObject.isCollision(wall, direction)){
+            if (gameObject.isCollision(wall, direction))
+            {
                 return true;
             }
         }
@@ -73,28 +86,36 @@ public class Model {
     }
 
 
-    public boolean checkBoxCollision(Direction direction){
+    public boolean checkBoxCollision(Direction direction)
+    {
 
         Player player = gameObjects.getPlayer();
 
         // найдем во что уперся игрок
-        GameObject  stoped = null;
-        for (GameObject gameObject: gameObjects.getAll()){
-            if (!(gameObject instanceof Player)&&!(gameObject instanceof Home) && player.isCollision(gameObject, direction)){
+        GameObject stoped = null;
+        for (GameObject gameObject : gameObjects.getAll())
+        {
+            if (!(gameObject instanceof Player) && !(gameObject instanceof Home) && player.isCollision(gameObject, direction))
+            {
                 stoped = gameObject;
             }
         }
         //свободное место или дом
-        if ((stoped == null)){
+        if ((stoped == null))
+        {
             return false;
         }
-        if (stoped instanceof Box){
-            Box stopedBox = (Box)stoped;
-            if (checkWallCollision(stopedBox, direction)){
+        if (stoped instanceof Box)
+        {
+            Box stopedBox = (Box) stoped;
+            if (checkWallCollision(stopedBox, direction))
+            {
                 return true;
             }
-            for (Box box : gameObjects.getBoxes()){
-                if(stopedBox.isCollision(box, direction)){
+            for (Box box : gameObjects.getBoxes())
+            {
+                if (stopedBox.isCollision(box, direction))
+                {
                     return true;
                 }
             }
@@ -117,19 +138,22 @@ public class Model {
 
     }
 
-    public void checkCompletion() {
+    public void checkCompletion()
+    {
 
         boolean yes = true;
 
-        for(Home home : gameObjects.getHomes()){
+        for (Home home : gameObjects.getHomes())
+        {
             boolean currentyes = false;
 
-            for (Box box: gameObjects.getBoxes()){
+            for (Box box : gameObjects.getBoxes())
+            {
                 if ((box.getX() == home.getX()) && (box.getY() == home.getY()))
                     currentyes = true;
             }
 
-            if (!currentyes)yes = false;
+            if (!currentyes) yes = false;
         }
 
         if (yes)

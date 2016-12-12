@@ -1,5 +1,6 @@
 package com.javarush.test.level24.lesson09.task02;
 
+
 import java.text.ChoiceFormat;
 import java.text.Format;
 import java.text.MessageFormat;
@@ -32,7 +33,7 @@ public class Solution {
         String[] filepart = {"closed {4}", "open {2} and last {3}"};
 
         ChoiceFormat fileform = new ChoiceFormat(filelimits, filepart);
-        Format[] testFormats = {null, dateFormat, fileform};
+        Format[] testFormats = {null, null, dateFormat, fileform};
         MessageFormat pattform = new MessageFormat("{0}   {1} | {5} {6}");
         pattform.setFormats(testFormats);
 
@@ -46,12 +47,39 @@ public class Solution {
             Object[] testArgs = {name, symbol, open, last, change, date, date.getTime()};
             System.out.println(pattform.format(testArgs));
         }
-    }
+        }
+
 
     public static void sort(List<Stock> list) {
         Collections.sort(list, new Comparator<Stock>() {
             public int compare(Stock stock1, Stock stock2) {
-                return 0;
+                int compareNames = ((String)stock1.get("name")).compareTo((String)stock2.get("name"));
+                if(compareNames != 0)
+                    return compareNames;
+                else {
+                    int compareDate = ((Date)stock1.get("date")).compareTo((Date)stock2.get("date"));
+                    if (compareDate != 0)
+                        return compareDate;
+                    else {
+                        Double change1;
+                        Double change2;
+                        if (stock1.containsKey("change")) {
+                            change1 = (Double)stock1.get("change");
+                        } else
+                            change1 = (Double)stock1.get("last") - (Double)stock1.get("open");
+
+                        if (stock2.containsKey("change")) {
+                            change2 = (Double)stock2.get("change");
+                        } else
+                            change2 = (Double)stock2.get("last") - (Double)stock2.get("open");
+
+                        int compareChanges = change2.compareTo(change1);
+                        if (compareChanges != 0)
+                            return compareChanges;
+                        else
+                            return 0;
+                    }
+                }
             }
         });
     }
